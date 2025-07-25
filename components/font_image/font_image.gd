@@ -21,6 +21,8 @@ var is_mouse_pressed: bool = false
 
 var letter_indices := Vector2i(0, 0)
 
+@onready var font: Font = preload("uid://d3niqyq8dgljh")
+
 @onready var camera = $"../MainCamera"
 
 
@@ -40,8 +42,15 @@ func _handle_image_controls(event: InputEvent):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			match event.button_index:
-				MOUSE_BUTTON_MIDDLE:
+				MOUSE_BUTTON_LEFT:
 					is_mouse_pressed = event.pressed
+					
+					#Auto focus x advance line edit for convenience
+					var x_advance_edit: LineEdit = user_interface.current_advance_edit
+					x_advance_edit.grab_focus()
+					x_advance_edit.edit()
+					x_advance_edit.select_all()
+					
 				MOUSE_BUTTON_WHEEL_UP:
 					current_zoom_amount = min(current_zoom_amount + 1, MAX_ZOOM_AMOUNT)
 					scale = Vector2.ONE * current_zoom_amount
@@ -50,7 +59,7 @@ func _handle_image_controls(event: InputEvent):
 					scale = Vector2.ONE * current_zoom_amount
 		if not event.pressed:
 			match event.button_index:
-				MOUSE_BUTTON_MIDDLE:
+				MOUSE_BUTTON_LEFT:
 					is_mouse_pressed = event.pressed
 	
 	if event is InputEventMouseMotion and is_mouse_pressed:
@@ -84,6 +93,9 @@ func _draw_letter_selection():
 	for j in range(char_counts.y):
 		for i in range(char_counts.x):
 			var index = i + j * char_counts.x
+			var letter = ""
+			if index < user_interface.char_list_edit.text.length():
+				letter = user_interface.char_list_edit.text[index]
 			var color = LETTER_BOX_COLOR
 			if letter_indices == Vector2i(i, j):
 				color = LETTER_SELECTION_COLOR
@@ -103,6 +115,22 @@ func _draw_letter_selection():
 				),
 				color
 			)
+			
+			# Draw character selection border
+			if letter_indices.x == i and letter_indices.y == j:
+				draw_rect(
+					Rect2(
+						top_left - offset,
+						char_dimensions
+					),
+					Color.BLUE, false, 0.5
+				)
+			
+			# Draw letter
+			if letter.length() == 1:
+				draw_char_outline(font, top_left + Vector2i(0, char_dimensions.y), letter, 4, 2, Color.BLACK)
+				draw_char(font, top_left + Vector2i(0, char_dimensions.y), letter, 4)
+			
 			if offset.x != 0:
 				var line_color = CHAR_OFFSET_POS_COLOR
 				if offset.x > 0:
@@ -155,6 +183,10 @@ func _draw_letter_separators():
 			Vector2(texture_dimensions.x, char_dimensions.y * i),
 			CHAR_SEPARATOR_COLOR
 		)
+
+
+func _draw_letter_border():
+	pass
 
 
 func update_wireframe() -> void:

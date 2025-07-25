@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://qujynrkg1dx3"
-path="res://.godot/imported/Inter-ExtraLight.ttf-56ba875d575c24181856751bf2903b55.fontdata"
+uid="uid://dydh1a0bwi0k"
+path="res://.godot/imported/pansyhand.ttf-02a21d897d97f2710f2860fde8bddf2f.fontdata"
 
 [deps]
 
-source_file="res://fonts/Inter/static/Inter-ExtraLight.ttf"
-dest_files=["res://.godot/imported/Inter-ExtraLight.ttf-56ba875d575c24181856751bf2903b55.fontdata"]
+source_file="res://fonts/pansy_hand/pansyhand.ttf"
+dest_files=["res://.godot/imported/pansyhand.ttf-02a21d897d97f2710f2860fde8bddf2f.fontdata"]
 
 [params]
 
@@ -16,7 +16,7 @@ Rendering=null
 antialiasing=1
 generate_mipmaps=false
 disable_embedded_bitmaps=true
-multichannel_signed_distance_field=false
+multichannel_signed_distance_field=true
 msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
@@ -29,7 +29,12 @@ Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[]
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0)
+}]
 language_support={}
 script_support={}
 opentype_features={}

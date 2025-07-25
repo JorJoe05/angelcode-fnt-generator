@@ -136,7 +136,8 @@ func _update_current_visible_char():
 	var selected_index = min(current_char_index, advance_infos.size() - 1)
 	
 	current_offset_edit.value = char_offsets[selected_index]
-	current_advance_edit.text = str(advance_infos[selected_index])
+	if not current_advance_edit.is_editing():
+		current_advance_edit.text = str(advance_infos[selected_index])
 	current_char_edit.text = str(selected_index)
 	
 	current_char_rect.offset_left = char_offsets[selected_index].x
